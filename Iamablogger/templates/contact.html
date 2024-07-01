@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Home | Equity Analysis{% endblock %}
+
+{% block content %}
+
+    <!-- Top Section with Banner -->
+	<section class="container my-5 py-5 bg-light">
+		<div class="row mt-5 py-5">
+			<div class="col-12 text-center">
+				<h1 style="color:#333;">Contact Form</h1>
+				<p class="lead lh-lg" style="color:#555;">Feedback or Suggestion? Reach out today; I'd love to hear from you!</p>
+			</div>
+		</div>
+	</section>
+
+    <div class="container my-5 py-5">
+        <div class="row justify-content-center align-items-center">
+			{% if message %}
+				<div class="alert alert-success mt-3">{{ message }}</div>
+			{% endif %}
+            <div class="col-md-6">
+                <div class="card">
+                    <h5 class="card-header">Contact Form</h5>
+                    <div class="card-body">
+                        <form action="{% url 'contact' %}" method="POST" >
+							{% csrf_token %}
+                            <div class="mb-3">
+                                <input type="text" class="form-control" id="nameInput" name="fullname" placeholder="Enter your name" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="email" class="form-control" id="emailInput" name="email" placeholder="Enter your email" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" id="subjectInput" name="subject" placeholder="Subject" required>
+                            </div>
+                            <div class="mb-3">
+                                <textarea class="form-control" id="messageInput" rows="4" name="email_body" placeholder="Your message" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-success w-100">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	
+{% endblock %}

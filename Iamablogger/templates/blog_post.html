@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ blog_post.title }}{% endblock %}
+
+{% block content %}
+        <!-- Page content-->
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- Post content-->
+                    <article>
+                        <!-- Post header-->
+                        <header class="mb-4">
+                            <!-- Post title-->
+                            <h1 class="fw-bolder mb-1">{{ blog_post.title }}</h1>
+                            <!-- Post meta content-->
+                            <div class="text-muted fst-italic mb-2">Published On {{ blog_post.published_datetime }} by {{ blog_post.author.first_name }} {{ blog_post.author.last_name }}</div>
+                            <!-- Post categories-->
+							{% for category in blog_post.categories.all %}
+								<a class="badge bg-secondary text-decoration-none link-light" href="">{{ category.name }}</a>
+							{% endfor %}
+                        </header>
+                        <!-- Preview image figure-->
+                        <figure class="mb-4"><img class="img-fluid rounded" src="{{ blog_post.post_image.url }}" alt="{{ blog_post.post_image_alt }}" /></figure>
+                        <!-- Post content-->
+                        <section class="mb-5">
+							{{ blog_post.content|safe }}
+                        </section>
+                    </article>
+                </div>
+                <!-- Side widgets-->
+                <div class="col-lg-4">
+					<!-- Categories widget-->
+					<div class="card mb-4">
+						<div class="card-header">Categories</div>
+						<div class="card-body">
+							<div class="row">
+								<ul class="list-unstyled mb-0">
+									{% for category in categories %}
+										<li><a class="badge bg-secondary text-decoration-none link-light" href="{% url 'all_posts_in_category' category.slug %}">{{ category.name }}</a></li>
+									{% endfor %}
+								</ul>
+							</div>
+						</div>
+					</div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

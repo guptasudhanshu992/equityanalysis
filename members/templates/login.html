@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+    <!-- Top Section with Banner -->
+	<section class="container my-5 py-5 bg-light">
+		<div class="row mt-5 py-5">
+			<div class="col-12 text-center">
+				<h1 style="color:#333;">Welcome Back</h1>
+				<p class="lead lh-lg" style="color:#555;">Login to see what's new</p>
+			</div>
+		</div>
+	</section>
+	{% if user.is_authenticated %}
+	<div class="container text-center">
+		<h1>You need to logout to login from a different account.</h1>
+		<a class="btn btn-danger" href="{% url 'logout' %}">Logout</a>
+		<a class="btn btn-primary" href="{%url 'home' %}">Back to Home</a>
+	</div>
+	{% else %}
+		<div class="container my-5 py-5">
+			<div class="row justify-content-center align-items-center">
+				<div class="col-md-6">
+					<div class="card">
+						<h5 class="card-header">Login</h5>
+						<div class="card-body">
+							<form method="post" novalidate>
+								{% csrf_token %}
+								{{ form.non_field_errors }}
+								<div class="mb-3">
+									{{ form.email }}
+								</div>
+								<div class="mb-3">
+									{{ form.password }}
+								</div>
+								<div class="mb-3 d-flex justify-content-between">
+									<a href="#" class="text-decoration-none">Forgot Password?</a>
+								</div>
+								<button type="submit" class="btn btn-primary w-100">Login</button>
+								<!-- Divider and Social Login Intro -->
+								<div class="text-center my-3">
+									<hr>
+									<p class="text-muted">or sign in with</p>
+								</div>
+								<!-- Social Media Login Buttons -->
+								<div class="d-grid gap-2">
+									<button type="button" class="btn btn-primary btn-block mb-2" style="background-color: #3b5998;">
+										<i class="fab fa-facebook-f me-2"></i> Login with Facebook
+									</button>
+									<button type="button" class="btn btn-primary btn-block" style="background-color: #db4437;">
+										<i class="fab fa-google me-2"></i> Login with Google
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+
+{% endblock %}

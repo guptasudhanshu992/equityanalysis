@@ -1,0 +1,145 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+<title>{% block title %}{% endblock %}</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<style>
+	.footer {
+		background-color: #343a40;
+		padding: 40px 0;
+		color: #d1d1d1;
+	}
+	.footer h5 {
+		color: #ffffff;
+	}
+	.footer a {
+		color: #d1d1d1;
+	}
+	.footer a:hover {
+		color: #f8f9fa;
+	}
+	#preloader {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: #ffffff;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		z-index: 9999;
+	}
+	.back-link {
+		margin-top: 20px;
+		padding: 10px 20px;
+		background-color: #263238;
+		color: #fff;
+		text-decoration: none;
+		border-radius: 5px;
+		transition: background-color 0.3s;
+	}
+	.back-link:hover {
+		background-color: #1565c0;
+
+	}
+</style>
+</head>
+<body>
+	<!-- Preloader -->
+	<div id="preloader">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+	
+	<!-- Top Navigation Bar -->
+	<nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding-left:10%;padding-right:10%;border-bottom:1px solid #999;">
+	  <div class="container-fluid justify-content-center">
+		<!-- Logo aligned to the left #2f3c36 -->
+		<a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'logo.png' %}" width="208" height="46"/></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+		<!-- Navbar elements -->
+		<div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+			
+			<!-- Navigation menu -->
+			<div class="navbar-nav mx-auto">
+				<a class="nav-link {% if request.path == '/home/' %} active text-success fw-bold{% endif %}" href="{% url 'home' %}">Home</a>
+				<a class="nav-link {% if request.path == '/blog/' %} active text-success fw-bold{% endif %}" href="{% url 'blog' %}">Blog</a>
+				<a class="nav-link {% if request.path == '/about/' %} active text-success fw-bold{% endif %}" href="{% url 'about' %}">About</a>
+				<a class="nav-link {% if request.path == '/contact/' %} active text-success fw-bold{% endif %}" href="{% url 'contact' %}">Contact</a>
+			</div>
+			
+			{% if user.is_authenticated %}
+				<div class="dropdown">
+					<button class="btn btn-outline-success dropdown-toggle d-flex align-items-center" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+						<i class="far fa-user-circle me-2" style="font-size:20px;"></i> <!-- Add a margin-end class -->
+						<span>{{ user.first_name }} {{ user.last_name }}</span>
+					</button>
+
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+						<li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+					</ul>
+				</div>
+			{% else %}
+				<!-- Login button aligned to the right -->
+				<div class="btn-group" role="group" aria-label="login buttons">
+				  <a type="button" class="btn btn-success" href="{% url 'signup' %}" >Sign Up</a>
+				  <a type="button" class="btn btn-outline-success" href="{% url 'login' %}">Login</a>
+				</div>
+			{% endif %}
+		</div>
+	  </div>
+	</nav>
+	
+	{% block content %}
+	
+	{% endblock %}
+	
+	<!-- Footer -->
+	<div class="footer mt-5" style="bottom:0;">
+        <div class="container">
+            <div class="row">
+                <!-- Contact Info -->
+                <div class="col-md-4 mb-3">
+                    <h5>Contact Us</h5>
+                    <p><strong>Email:</strong> <a href="mailto:support@equityanalysis.co.in">support@equityanalysis.co.in</a></p>
+                    <!-- <p><strong>Phone:</strong> +123 456 7890</p> -->
+                    <!-- <p><strong>Address:</strong> Hyderabad, India</p> -->
+                </div>
+                <!-- Quick Links -->
+                <div class="col-md-5 mb-3">
+                    <h5>Quick Links</h5>
+                    <p class="d-flex justify-content-between">
+                        <a href="">Home</a>
+                        <a href="">About Us</a>
+                        <a href="">Blog</a>
+                        <a href="">Contact Us</a>
+                    </p>
+                </div>
+            </div>
+            <!-- Copyright -->
+            <div class="text-center mt-4">
+                <p class="lg">&copy; 2024 Equity Analysis. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+	<script>
+        window.addEventListener('load', function() {
+            var preloader = document.getElementById('preloader');
+            if(preloader) {
+                preloader.style.display = 'none';
+            }
+        });
+    </script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

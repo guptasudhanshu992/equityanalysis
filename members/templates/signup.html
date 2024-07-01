@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <!-- Top Section with Banner -->
+	<section class="container my-5 py-5 bg-light">
+		<div class="row mt-5 py-5">
+			<div class="col-12 text-center">
+				<h1 style="color:#333;">Join Us!</h1>
+				<p class="lead lh-lg" style="color:#555;">Get exclusive excess to extensively researched content!</p>
+			</div>
+		</div>
+	</section>
+	
+	{% if user.is_authenticated %}
+		<div class="container text-center">
+			<h1>You need to logout to register a new account.</h1>
+			<a class="btn btn-danger" href="{% url 'logout' %}">Logout</a>
+			<a class="btn btn-primary" href="{%url 'home' %}">Back to Home</a>
+		</div>
+	{% else %}
+		<!-- Sign Up Section -->
+		<section class="container my-5 py-5 bg-light">
+			<div class="row justify-content-center">
+				<div class="col-md-6">
+					<div class="card">
+						<h5 class="card-header">Sign Up</h5>
+						<div class="card-body">
+							<form method="post">
+								{% csrf_token %}
+								{{ form.non_field_errors }}
+								<div class="mb-3 row">
+									<div class="col">
+										{{ form.first_name }}
+									</div>
+									<div class="col">
+										{{ form.last_name }}
+									</div>
+								</div>
+								<div class="mb-3">
+									{{ form.email }}
+								</div>
+								<div class="mb-3">
+									{{ form.password1 }}
+								</div>
+								<div class="mb-3">
+									{{ form.password2 }}
+								</div>
+								<button type="submit" class="btn btn-primary w-100">Sign Up</button>
+								<!-- Divider and Social Login Intro -->
+								<hr>
+								<p class="text-muted text-center">or sign up with</p>
+								<!-- Social Media Login Buttons -->
+								<div class="d-grid gap-2">
+									<button type="button" class="btn btn-primary btn-block mb-2" style="background-color: #3b5998;">
+										<i class="fab fa-facebook-f me-2"></i> Facebook
+									</button>
+									<button type="button" class="btn btn-primary btn-block" style="background-color: #db4437;">
+										<i class="fab fa-google me-2"></i> Google
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	{% endif %}
+{% endblock %}
