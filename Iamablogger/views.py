@@ -26,7 +26,10 @@ def HomeView(request):
 def BlogView(request):
     categories = Category.objects.all()
     blog_posts = BlogPost.objects.all()
-    context = {'blog_posts': blog_posts, 'categories': categories}
+    static_root = settings.STATIC_ROOT
+    static_files_dirs = settings.STATICFILES_DIRS
+    response = f'STATIC_ROOT: {static_root}<br>STATICFILES_DIRS: {static_files_dirs}'
+    context = {'blog_posts': blog_posts, 'categories': categories, 'response':response}
     return render(request, 'blog.html', context)
 
 def BlogPostView(request, posturl):

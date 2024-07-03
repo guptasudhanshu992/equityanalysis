@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %}{{ blog_post.title }}{% endblock %}
 
 {% block content %}
@@ -21,7 +23,7 @@
 							{% endfor %}
                         </header>
                         <!-- Preview image figure-->
-                        <figure class="mb-4"><img class="img-fluid rounded" src="{{ blog_post.post_image.url }}" alt="{{ blog_post.post_image_alt }}" /></figure>
+                        <figure class="mb-4"><img class="img-fluid rounded" src="{% static blog_post.post_image_name %}" alt="{{ blog_post.post_image_alt }}" /></figure>
                         <!-- Post content-->
                         <section class="mb-5">
 							{{ blog_post.content|safe }}

@@ -23,8 +23,8 @@ class Category(models.Model):
 class BlogPost(models.Model):
     title = models.CharField(max_length=200, unique=True)
     posturl = models.SlugField(max_length=200, unique=True, blank=True)
-    post_image = models.ImageField(upload_to='blog_images/', blank=True, null=True)
-    post_image_alt = models.CharField(max_length=200, blank=True)
+    post_image_name = models.CharField(max_length=200, default="Image")
+    post_image_alt = models.CharField(max_length=200, default="Image")
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     published_datetime = models.DateTimeField(default=timezone.now)
     content = models.TextField()
