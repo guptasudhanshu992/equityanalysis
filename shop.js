@@ -129,15 +129,12 @@ function renderCart(containerId) {
   }
 
   container.innerHTML = items.map(item => `
-    <div class="cart-item" data-id="${item.id}">
-      <img src="${item.image}" alt="${item.title}" />
-      <div>
-        <h4>${item.title}</h4>
-        <p>$${item.price.toFixed(2)}</p>
-        <input type="number" min="1" value="${item.quantity}" onchange="Cart.updateQuantity('${item.id}', this.value)">
-        <button onclick="Cart.removeItem('${item.id}'); renderCart('${containerId}')">Remove</button>
-      </div>
-    </div>
+    <tr class="cart-item" data-id="prod-101">
+      <td><img src="${item.image}" alt="${item.title}" class="img-thumbnail" /></td>
+      <td>${item.title}</td>
+      <td class="price">$${item.price.toFixed(2)}</td>
+      <td><button class="btn btn-sm btn-danger" onclick="Cart.removeItem('prod-101'); renderCartTable('cart-items');">Remove</button></td>
+    </tr>
   `).join('');
 }
 
