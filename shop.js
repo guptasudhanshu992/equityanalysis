@@ -38,6 +38,7 @@ const Cart = {
   },
 
   addItem(product) {
+    alert("item added");
     let items = this.getItems();
     const index = items.findIndex(item => item.id === product.id);
     if (index > -1) {
@@ -46,7 +47,7 @@ const Cart = {
       items.push({ ...product, quantity: product.quantity || 1 });
     }
     this.saveItems(items);
-    alert("item added");
+    
   },
 
   removeItem(productId) {
