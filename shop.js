@@ -216,9 +216,3 @@ function applyDiscount() {
   const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
   updateSummary(subtotal);
 }
-
-function addToCart(product) {
-  Cart.addItem(product);
-  renderCartTable('cart-items');  // Update UI if on cart page
-  alert(`${product.title} added to cart.`);
-}
