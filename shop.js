@@ -46,6 +46,7 @@ const Cart = {
       items.push({ ...product, quantity: product.quantity || 1 });
     }
     this.saveItems(items);
+    alert("item added");
   },
 
   removeItem(productId) {
