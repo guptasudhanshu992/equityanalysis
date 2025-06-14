@@ -162,3 +162,57 @@ function renderWishlist(containerId) {
     </div>
   `).join('');
 }
+
+function renderCartTable(tableBodyId) {
+  const items = Cart.getItems();
+  const container = document.getElementById(tableBodyId);
+  if (!container) return;
+
+  if (items.length === 0) {
+    container.innerHTML = `<tr><td colspan="4">Your cart is empty.</td></tr>`;
+    updateSummary(0); // also update summary
+    return;
+  }
+
+  let subtotal = 0;
+
+  container.innerHTML = items.map(item => {
+    const totalItemPrice = item.price * item.quantity;
+    subtotal += totalItemPrice;
+
+    return `
+      <tr class="cart-item" data-id="${item.id}">
+        <td><img src="${item.image}" alt="${item.title}" class="img-thumbnail" style="max-width: 80px;" /></td>
+        <td>${item.title}</td>
+        <td class="price" data-price="${totalItemPrice.toFixed(2)}">$${totalItemPrice.toFixed(2)}</td>
+        <td><span class="remove-btn" onclick="Cart.removeItem('${item.id}'); renderCartTable('${tableBodyId}');">Remove</span></td>
+      </tr>
+    `;
+  }).join('');
+
+  updateSummary(subtotal);
+}
+
+let discountAmount = 0;
+
+function updateSummary(subtotal) {
+  document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+  document.getElementById('discount').textContent = `-$${discountAmount.toFixed(2)}`;
+  document.getElementById('total').textContent = `$${(subtotal - discountAmount).toFixed(2)}`;
+}
+
+function applyDiscount() {
+  const coupon = document.getElementById('couponInput').value.trim();
+  if (coupon.toLowerCase() === "save10") {
+    discountAmount = 10;
+    document.getElementById('discountMessage').textContent = "Coupon 'SAVE10' applied successfully!";
+  } else {
+    discountAmount = 0;
+    document.getElementById('discountMessage').textContent = "Invalid coupon code.";
+  }
+
+  // Recalculate summary using actual cart data
+  const items = Cart.getItems();
+  const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  updateSummary(subtotal);
+}
